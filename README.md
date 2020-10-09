@@ -61,6 +61,48 @@ private static var options: PHFetchOptions = {
 private var custom
 ```
 
+## Supports API
+
+`PHAssetCollection`
+
+```swift
+@FetchAssetCollection(
+    album: .smartAlbum,
+    filter: NSPredicate(format: "NOT (assetCollectionSubtype IN %@)",
+                        [PHAssetCollectionSubtype.smartAlbumUserLibrary.rawValue,
+                         PHAssetCollectionSubtype.smartAlbumAllHidden.rawValue,
+                         PHAssetCollectionSubtype.smartAlbumFavorites.rawValue,
+                        ])
+) private var albums
+```
+
+`PHCollectionList`
+
+```swift
+@FetchCollectionList(
+    list: .smartFolder,
+    kind: .any
+) private var folders
+```
+
+`PHAsset`
+
+```swift
+// You can instantiate your results during init: 
+@FetchAssetList 
+private var assets: MediaResults<PHAsset>
+
+// Or, if you already have a set of results from a `PHFetchResult<PHAsset>` instance:
+@FetchAssetList(results)
+private var assets
+
+// Alternatively, if you have a `PHAssetCollection` instance:
+@FetchAssetList(in: PHAssetCollection())
+private var assets
+```
+
+There are multiple overrides for all of the above to allow for most customizations, alternatively you can pass a `PHFetchOptions` instance yourself as mentioned above.
+
 ## Exclusions
 
 The primary purpose of this library is to simplfiy the usage of the `Photos` framework in SwiftUI applications. As such, permission requests and mutations are being intentionally excluded.
