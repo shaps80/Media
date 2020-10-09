@@ -97,7 +97,7 @@ private var assets: MediaResults<PHAsset>
 private var assets
 
 // Alternatively, if you have a `PHAssetCollection` instance:
-@FetchAssetList(in: PHAssetCollection())
+@FetchAssetList(in: collection)
 private var assets
 ```
 
