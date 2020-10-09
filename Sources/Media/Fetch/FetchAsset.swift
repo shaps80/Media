@@ -6,7 +6,7 @@ import SwiftUI
 
 /// Fetches a single asset
 @propertyWrapper
-public struct FetchAsset: DynamicProperty {
+struct FetchAsset: DynamicProperty {
 
     @ObservedObject
     internal private(set) var observer: AssetObserver
@@ -30,7 +30,7 @@ extension FetchAsset {
 }
 
 /// Represents the result of a `FetchAsset` request.
-public struct MediaAsset {
+struct MediaAsset {
 
     public private(set) var asset: PHAsset?
 

@@ -16,17 +16,31 @@ public struct FetchCollectionList<Result>: DynamicProperty where Result: PHColle
 
 extension FetchCollectionList {
 
+    /// Instantiates a fetch with an existing `PHFetchResult<Result>` instance
+    public init(_ result: PHFetchResult<PHAsset>) {
+        observer = ResultsObserver(result: result as! PHFetchResult<Result>)
+    }
+
+    /// Instantiates a fetch with a custom `PHFetchOptions` instance
     public init(_ options: PHFetchOptions?) {
         let result = PHCollectionList.fetchTopLevelUserCollections(with: options)
         self.init(observer: ResultsObserver(result: result as! PHFetchResult<Result>))
     }
 
+    /// Instantiates a fetch by applying the specified sort and filter options
+    /// - Parameters:
+    ///   - filter: The predicate to apply when filtering the results
     public init(filter: NSPredicate? = nil) {
         let options = PHFetchOptions()
         options.predicate = filter
         self.init(options)
     }
 
+    /// Instantiates a fetch by applying the specified sort and filter options
+    /// - Parameters:
+    ///   - fetchLimit: The fetch limit to apply to the fetch, this may improve performance but limits results
+    ///   - filter: The predicate to apply when filtering the results
+    ///   - sort: The keyPaths to apply when sorting the results
     public init<Value>(fetchLimit: Int = 0,
                        filter: NSPredicate? = nil,
                        sort: [(KeyPath<PHCollectionList, Value>, ascending: Bool)]) {
@@ -41,6 +55,11 @@ extension FetchCollectionList {
 
 extension FetchCollectionList {
 
+    /// Fetches all lists of the specified type and subtyle
+    /// - Parameters:
+    ///   - list: The list type to filter by
+    ///   - kind: The list subtype to filter by
+    ///   - options: Any additional options to apply to the request
     public init(list: PHCollectionListType,
                 kind: PHCollectionListSubtype = .any,
                 options: PHFetchOptions? = nil) {
@@ -48,6 +67,12 @@ extension FetchCollectionList {
         self.init(observer: ResultsObserver(result: result as! PHFetchResult<Result>))
     }
 
+    /// Fetches all lists of the specified type and subtyle
+    /// - Parameters:
+    ///   - list: The list type to filter by
+    ///   - kind: The list subtype to filter by
+    ///   - fetchLimit: The fetch limit to apply to the fetch, this may improve performance but limits results
+    ///   - filter: The predicate to apply when filtering the results
     public init(list: PHCollectionListType,
                 kind: PHCollectionListSubtype = .any,
                 fetchLimit: Int = 0,
@@ -58,6 +83,13 @@ extension FetchCollectionList {
         self.init(list: list, kind: kind, options: options)
     }
 
+    /// Fetches all lists of the specified type and subtyle
+    /// - Parameters:
+    ///   - list: The list type to filter by
+    ///   - kind: The list subtype to filter by
+    ///   - fetchLimit: The fetch limit to apply to the fetch, this may improve performance but limits results
+    ///   - filter: The predicate to apply when filtering the results
+    ///   - sort: The keyPaths to apply when sorting the results
     public init<Value>(list: PHCollectionListType,
                        kind: PHCollectionListSubtype = .any,
                        fetchLimit: Int = 0,

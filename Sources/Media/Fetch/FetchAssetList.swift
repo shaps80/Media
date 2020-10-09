@@ -31,13 +31,13 @@ extension FetchAssetList {
 
     /// Instantiates a fetch by applying the specified sort and filter options
     /// - Parameters:
-    ///   - sort: <#sort description#>
-    ///   - filter: <#filter description#>
-    ///   - sourceTypes: <#sourceTypes description#>
-    ///   - includeAllBurstAssets: <#includeAllBurstAssets description#>
-    ///   - includeHiddenAssets: <#includeHiddenAssets description#>
-    public init<Value>(sort: [(KeyPath<PHAsset, Value>, ascending: Bool)],
-                       filter: NSPredicate? = nil,
+    ///   - filter: The predicate to apply when filtering the results
+    ///   - sort: The keyPaths to apply when sorting the results
+    ///   - sourceTypes: The sourceTypes to include in the results
+    ///   - includeAllBurstAssets: If true, burst assets will be included in the results
+    ///   - includeHiddenAssets: If true, hidden assets will be included in the results
+    public init<Value>(filter: NSPredicate? = nil,
+                       sort: [(KeyPath<PHAsset, Value>, ascending: Bool)],
                        sourceTypes: PHAssetSourceType = [.typeCloudShared, .typeUserLibrary, .typeiTunesSynced],
                        includeAllBurstAssets: Bool = false,
                        includeHiddenAssets: Bool = false) {
@@ -54,12 +54,24 @@ extension FetchAssetList {
 
 extension FetchAssetList {
 
+    /// Fetches all assets in the specified collection
+    /// - Parameters:
+    ///   - collection: The asset collection to filter by
+    ///   - options: Any additional options to apply to the request
     public init(in collection: PHAssetCollection,
                 options: PHFetchOptions? = nil) {
         let result = PHAsset.fetchAssets(in: collection, options: options)
         self.init(observer: ResultsObserver(result: result as! PHFetchResult<Result>))
     }
 
+    /// Fetches all assets in the specified collection
+    /// - Parameters:
+    ///   - collection: The asset collection to filter by
+    ///   - fetchLimit: The fetch limit to apply to the fetch, this may improve performance but limits results
+    ///   - filter: The predicate to apply when filtering the results
+    ///   - sourceTypes: The sourceTypes to include in the results
+    ///   - includeAllBurstAssets: If true, burst assets will be included in the results
+    ///   - includeHiddenAssets: If true, hidden assets will be included in the results
     public init(in collection: PHAssetCollection,
                 fetchLimit: Int = 0,
                 filter: NSPredicate? = nil,
@@ -75,6 +87,15 @@ extension FetchAssetList {
         self.init(in: collection, options: options)
     }
 
+    /// Fetches all assets in the specified collection
+    /// - Parameters:
+    ///   - collection: The asset collection to filter by
+    ///   - fetchLimit: The fetch limit to apply to the fetch, this may improve performance but limits results
+    ///   - filter: The predicate to apply when filtering the results
+    ///   - sort: The keyPaths to apply when sorting the results
+    ///   - sourceTypes: The sourceTypes to include in the results
+    ///   - includeAllBurstAssets: If true, burst assets will be included in the results
+    ///   - includeHiddenAssets: If true, hidden assets will be included in the results
     public init<Value>(in collection: PHAssetCollection,
                        fetchLimit: Int = 0,
                        filter: NSPredicate? = nil,
