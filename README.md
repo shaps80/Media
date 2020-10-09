@@ -27,6 +27,31 @@ struct AlbumsView: View {
 }
 ```
 
+## Further Usage
+
+The property wrapper has heavily inspired by the new `FetchRequest` provided by SwiftUI. As such, it conforms to `RandomAccessCollection` allowing it to be used in all the same places, e.g. `List`, `ForEach`, etc...
+
+This greatly simplifies the use of the photos framework library when integrating into a SwiftUI package.
+
+Since the library is also a `dynamic` property, updates occuring in the users library are automatically tracked and reflecting in your SwiftUI views.
+
+## Custom Queries
+
+The property wrapper initializers provide various overrides to ensure you can customize the queries you need to perform. 
+
+In cases where a convenience initializer hasn't been provided, you can simply pass your own `PHFetchOptions` instance:
+
+```swift
+private static var options: PHFetchOptions = {
+    let options = PHFetchOptions()
+    options.predicate = ...
+    return options
+}()
+
+@FetchAssetCollection(options)
+private var custom
+```
+
 ## Installation
 
 The library is provided as an open-source Swift package. So simply add the dependency to your package list:
