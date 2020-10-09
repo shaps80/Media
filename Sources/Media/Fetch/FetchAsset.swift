@@ -2,12 +2,16 @@ import UIKit
 import Photos
 import SwiftUI
 
+#warning("This is definitely incomplete and I'm not sure if its even working!")
+
+/// Fetches a single asset
 @propertyWrapper
 public struct FetchAsset: DynamicProperty {
 
     @ObservedObject
     internal private(set) var observer: AssetObserver
 
+    /// Represents the fetched asset
     public var wrappedValue: MediaAsset {
         MediaAsset(asset: observer.asset)
     }
@@ -16,6 +20,8 @@ public struct FetchAsset: DynamicProperty {
 
 extension FetchAsset {
 
+    /// Instantiates the fetch with an existing `PHAsset`
+    /// - Parameter asset: The asset
     public init(_ asset: PHAsset) {
         let observer = AssetObserver(asset: asset)
         self.init(observer: observer)
@@ -23,6 +29,7 @@ extension FetchAsset {
 
 }
 
+/// Represents the result of a `FetchAsset` request.
 public struct MediaAsset {
 
     public private(set) var asset: PHAsset?

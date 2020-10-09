@@ -2,6 +2,7 @@ import Photos
 
 public extension PHAssetCollectionSubtype {
 
+    /// A convenience property that returns the associated SFSymbol image for the specified collection subtype
     var systemImageName: String {
         switch self {
         case .albumCloudShared: return "rectangle.stack.badge.person.crop"
@@ -33,6 +34,7 @@ public extension PHAssetCollectionSubtype {
 
 public extension PHCollectionListSubtype {
 
+    /// A convenience property that returns the associated SFSymbol image for the specified list subtype
     var systemImageName: String {
         switch self {
         case .smartFolderEvents: return "mappin.and.ellipse"

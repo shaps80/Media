@@ -1,11 +1,12 @@
 import Photos
 
-/// Represents a `PHFetchResult` that can be used as a `RandomAccessCollection`
+/// Represents a `PHFetchResult` that can be used as a `RandomAccessCollection` in a SwiftUI view such as `List`, `ForEach`, etc...
 public struct MediaResults<Result>: RandomAccessCollection where Result: PHObject {
 
+    /// Represents the underlying results
     public private(set) var result: PHFetchResult<Result>
 
-    /// Instantiates a new instance with the specfiied result
+    /// Instantiates a new instance with the specified result
     public init(_ result: PHFetchResult<Result>) {
         self.result = result
     }

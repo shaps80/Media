@@ -68,12 +68,15 @@ private var custom
 ```swift
 @FetchAssetCollection(
     album: .smartAlbum,
-    filter: NSPredicate(format: "NOT (assetCollectionSubtype IN %@)",
-                        [PHAssetCollectionSubtype.smartAlbumUserLibrary.rawValue,
-                         PHAssetCollectionSubtype.smartAlbumAllHidden.rawValue,
-                         PHAssetCollectionSubtype.smartAlbumFavorites.rawValue,
-                        ])
-) private var albums
+    filter: NSPredicate(
+        format: "NOT (assetCollectionSubtype IN %@)",
+        [
+            PHAssetCollectionSubtype.smartAlbumUserLibrary.rawValue,
+            PHAssetCollectionSubtype.smartAlbumAllHidden.rawValue,
+            PHAssetCollectionSubtype.smartAlbumFavorites.rawValue,
+        ]
+    )
+) var albums
 ```
 
 `PHCollectionList`

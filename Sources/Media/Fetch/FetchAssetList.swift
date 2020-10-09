@@ -1,12 +1,14 @@
 import Photos
 import SwiftUI
 
+/// Fetches a set of assets from the `Photos` framework
 @propertyWrapper
 public struct FetchAssetList<Result>: DynamicProperty where Result: PHAsset {
 
     @ObservedObject
     internal private(set) var observer: ResultsObserver<Result>
 
+    /// Represents the results of the fetch
     public var wrappedValue: MediaResults<Result> {
         get { MediaResults(observer.result) }
         set { observer.result = newValue.result }
@@ -16,15 +18,24 @@ public struct FetchAssetList<Result>: DynamicProperty where Result: PHAsset {
 
 extension FetchAssetList {
 
+    /// Instantiates a fetch with an existing `PHFetchResult<Result>` instance
     public init(_ result: PHFetchResult<PHAsset>) {
         observer = ResultsObserver(result: result as! PHFetchResult<Result>)
     }
 
+    /// Instantiates a fetch with a custom `PHFetchOptions` instance
     public init(_ options: PHFetchOptions? = nil) {
         let result = PHAsset.fetchAssets(with: options)
         observer = ResultsObserver(result: result as! PHFetchResult<Result>)
     }
 
+    /// Instantiates a fetch by applying the specified sort and filter options
+    /// - Parameters:
+    ///   - sort: <#sort description#>
+    ///   - filter: <#filter description#>
+    ///   - sourceTypes: <#sourceTypes description#>
+    ///   - includeAllBurstAssets: <#includeAllBurstAssets description#>
+    ///   - includeHiddenAssets: <#includeHiddenAssets description#>
     public init<Value>(sort: [(KeyPath<PHAsset, Value>, ascending: Bool)],
                        filter: NSPredicate? = nil,
                        sourceTypes: PHAssetSourceType = [.typeCloudShared, .typeUserLibrary, .typeiTunesSynced],
