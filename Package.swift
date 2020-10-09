@@ -6,7 +6,10 @@ import PackageDescription
 let package = Package(
     name: "Media",
     platforms: [
-        .iOS(.v13)
+        .iOS(.v13),
+        .macOS(.v10_15),
+        .tvOS(.v13),
+        .watchOS(.v6)
     ],
     products: [
         .library(
@@ -17,8 +20,5 @@ let package = Package(
         .target(
             name: "Media",
             dependencies: []),
-        .testTarget(
-            name: "MediaTests",
-            dependencies: ["Media"]),
     ]
 )

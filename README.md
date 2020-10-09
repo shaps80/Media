@@ -1,3 +1,8 @@
+![ios](https://img.shields.io/badge/iOS-13-green)
+![tv](https://img.shields.io/badge/tvOS-13-green)
+![watch](https://img.shields.io/badge/watchOS-6-green)
+![mac](https://img.shields.io/badge/macOS-10.15-green)
+
 # Media
 
 > WIP: This library is __not__ yet completed, as such no specific versioning will be included until documentation and such have been included.
@@ -13,6 +18,8 @@ A SwiftUI dynamic property wrapper for fetching media from your photo library.
 Fetch all asset collections of a given type and subtype:
 
 ```swift
+import Media
+
 struct AlbumsView: View {
 
     @FetchAssetCollection(album: .album, kind: .albumRegular)
@@ -27,7 +34,9 @@ struct AlbumsView: View {
 }
 ```
 
-## Further Usage
+> Note: Its not necessary to `import Photos` as the framework does this for you.
+
+## Usage
 
 The property wrapper has heavily inspired by the new `FetchRequest` provided by SwiftUI. As such, it conforms to `RandomAccessCollection` allowing it to be used in all the same places, e.g. `List`, `ForEach`, etc...
 
@@ -51,6 +60,14 @@ private static var options: PHFetchOptions = {
 @FetchAssetCollection(options)
 private var custom
 ```
+
+## Exclusions
+
+The primary purpose of this library is to simplfiy the usage of the `Photos` framework in SwiftUI applications. As such, permission requests and mutations are being intentionally excluded.
+
+Those APIs are not an issue that needs fixing by this library. 
+
+Instead you should continue to use the existing APIs available via the `Photos` framework. Since the use of `Photos` types is required, the library automatically imports `Photos` for you so adding an additional import is redundant.
 
 ## Installation
 
